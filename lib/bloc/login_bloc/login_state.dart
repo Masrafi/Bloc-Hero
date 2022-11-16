@@ -10,3 +10,7 @@ class LogInErrorState extends LogInState {
 }
 
 class LogInLoadingState extends LogInState {}
+
+class LogInSuccessState extends LogInState {}
+
+class LogInFailState extends LogInState {}
