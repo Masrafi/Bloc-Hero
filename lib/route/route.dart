@@ -1,3 +1,4 @@
+import 'package:bdtender_bloc/bloc/login_bloc/login_bloc.dart';
 import 'package:bdtender_bloc/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,19 +10,19 @@ class Routes {
     switch (settings.name) {
       case "/login":
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => InternetCubit(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider<InternetCubit>(
+                create: (context) => InternetCubit(),
+              ),
+              BlocProvider<LogInBloc>(
+                create: (context) => LogInBloc(),
+              )
+            ],
             child: LoginScreen(),
           ),
         );
 
-      // case "/signin":
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider(
-      //       create: (context) => SignInBloc(),
-      //       child: SigninScreen(),
-      //     ),
-      //   );
       //
       // case "/internet":
       //   Map<String, dynamic> arguments =
