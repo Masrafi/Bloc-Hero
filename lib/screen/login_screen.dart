@@ -3,7 +3,6 @@ import 'package:bdtender_bloc/bloc/login_bloc/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../bloc/login_bloc/login_bloc.dart';
 import '../utils/color.dart';
 import '../utils/heder.dart';
@@ -61,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         content: Text('Login Successfully'),
                       ),
                     );
+                    Navigator.pushReplacementNamed(context, '/home');
                   }
                   if (state is LogInFailState) {
                     ScaffoldMessenger.of(context).showSnackBar(
