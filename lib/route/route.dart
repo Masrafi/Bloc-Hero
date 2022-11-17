@@ -1,9 +1,14 @@
 import 'package:bdtender_bloc/bloc/login_bloc/login_bloc.dart';
+import 'package:bdtender_bloc/repository/corrigen_repo.dart';
+import 'package:bdtender_bloc/repository/live_repo.dart';
+import 'package:bdtender_bloc/repository/private_repo.dart';
+import 'package:bdtender_bloc/screen/home.dart';
 import 'package:bdtender_bloc/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/internet_bloc/internet_cubit.dart';
+import '../repository/today_repo.dart';
 
 class Routes {
   static Route? onGenerateRoute(RouteSettings settings) {
@@ -23,6 +28,31 @@ class Routes {
           ),
         );
 
+      // case "/home":
+      //   return MaterialPageRoute(
+      //     builder: (context) => Home(),
+      //   );
+
+      case "/home":
+        return MaterialPageRoute(
+          builder: (context) => MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider(
+                create: (context) => RepositoryToday(),
+              ),
+              RepositoryProvider(
+                create: (context) => RepositoryLive(),
+              ),
+              RepositoryProvider(
+                create: (context) => RepositoryCorrigen(),
+              ),
+              RepositoryProvider(
+                create: (context) => RepositoryPrivate(),
+              ),
+            ],
+            child: Home(),
+          ),
+        );
       //
       // case "/internet":
       //   Map<String, dynamic> arguments =
@@ -57,13 +87,7 @@ class Routes {
       //     ),
       //   );
       //
-      // case "/apihome":
-      //   return MaterialPageRoute(
-      //     builder: (context) => RepositoryProvider(
-      //       create: (context) => Repository(),
-      //       child: ApiHomeScreen(),
-      //     ),
-      //   );
+
       //
       // case "/viewdataAPI":
       //   Map<String, dynamic> arguments =

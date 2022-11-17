@@ -30,10 +30,8 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
         });
         print(response.body);
         if (jsonDecode(response.body) == "Success") {
-          print(".................");
           emit(LogInSuccessState());
         } else {
-          print(",,,,,,,,,,,,");
           emit(LogInFailState());
         }
       },
