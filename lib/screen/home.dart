@@ -374,7 +374,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Text(
                                         userList[index].message,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 14),
                                       )
                                     ],
                                   )
@@ -432,7 +432,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Text(
                                         userList[index].message,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 14),
                                       )
                                     ],
                                   )
@@ -498,7 +498,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Text(
                                         userList[index].message,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 14),
                                       )
                                     ],
                                   )
@@ -556,7 +556,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Text(
                                         userList[index].message,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 14),
                                       )
                                     ],
                                   )
