@@ -12,7 +12,7 @@ class LiveCountBloc extends Bloc<LiveCountEvent, LiveCountState> {
     on<LiveCountLoadEvent>((event, emit) async {
       emit(LiveCountLoadingState());
       try {
-        final user = await _repository.getTodayCountData();
+        final user = await _repository.getLiveCountData();
         emit(LiveCountLoadedState(user));
       } catch (e) {
         emit(LiveCountErrorState(e.toString()));

@@ -12,7 +12,7 @@ class PrivateCountBloc extends Bloc<PrivateCountEvent, PrivateCountState> {
     on<PrivateCountLoadEvent>((event, emit) async {
       emit(PrivateCountLoadingState());
       try {
-        final user = await _repository.getTodayCountData();
+        final user = await _repository.getPrivateCountData();
         emit(PrivateCountLoadedState(user));
       } catch (e) {
         emit(PrivateCountErrorState(e.toString()));

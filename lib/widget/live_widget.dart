@@ -55,11 +55,7 @@ class Live extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) =>
-                    //             TodayPublishTender()));
+                    Navigator.pushNamed(context, '/liveDetails');
                   },
                 );
               }),

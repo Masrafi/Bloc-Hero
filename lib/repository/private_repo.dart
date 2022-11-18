@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 import '../model/todayCount_model.dart';
+import '../utils/config.dart';
 
 class RepositoryPrivate {
-  String endPoint = "https://www.bdtender.com/api/count-private_tenders";
-  getTodayCountData() async {
+  var endPoint = Config.PRIVATE_REPO;
+  getPrivateCountData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
