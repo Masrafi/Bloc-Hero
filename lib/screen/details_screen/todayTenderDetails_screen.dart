@@ -4,18 +4,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/details_bloc/today_details/todayTenderDetails_bloc.dart';
 import '../../bloc/details_bloc/today_details/todayTenderDetails_event.dart';
 import '../../bloc/details_bloc/today_details/todayTenderDetails_state.dart';
+import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
+import '../../bloc/saveTender_bloc/saveTender_event.dart';
+import '../../bloc/saveTender_bloc/saveTender_state.dart';
 import '../../model/details_model/todayTenderDetails.dart';
 import '../../utils/heder.dart';
+import '../../widget/savetender_success.dart';
 
 class TodayTenderDetailsScreen extends StatelessWidget {
   const TodayTenderDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TodayTenderDetailsBloc(
-        RepositoryProvider.of<RepositoryTodayTenderDetails>(context),
-      )..add(TodayTenderDetailsLoadEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TodayTenderDetailsBloc(
+            RepositoryProvider.of<RepositoryTodayTenderDetails>(context),
+          )..add(TodayTenderDetailsLoadEvent()),
+        ),
+        BlocProvider(
+          create: (context) => SaveTenderBloc(),
+        ),
+      ],
       child: Scaffold(
           appBar: header(context, titleText: "Today"),
           body: BlocBuilder<TodayTenderDetailsBloc, TodayTenderDetailsState>(
@@ -31,10 +42,12 @@ class TodayTenderDetailsScreen extends StatelessWidget {
               );
             }
             if (state is TodayTenderDetailsLoadedState) {
+              SaveTenderSuccess();
               List<TodayTenderDetailsModel> userList = state.users;
               return ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
+                  physics: ScrollPhysics(),
                   itemCount: userList.length,
                   itemBuilder: (_, index) {
                     return Container(
@@ -514,20 +527,12 @@ class TodayTenderDetailsScreen extends StatelessWidget {
                                     elevation: 5.0,
                                   ),
                                   onPressed: () {
-                                    // code =
-                                    // list[index]["tendercode"];
-                                    // print(code);
-                                    // setState(() {
-                                    //   show();
-                                    // });
+                                    context.read<SaveTenderBloc>().add(
+                                        SaveTenderSubmittedEvent(
+                                            email: 'masrafianam@gmail.com',
+                                            tenderCode: '10530653'));
+                                    SaveTenderSuccess();
                                   },
-                                  // padding: EdgeInsets.all(15.0),
-                                  // shape: RoundedRectangleBorder(
-                                  //   borderRadius:
-                                  //       BorderRadius.circular(
-                                  //           12.0),
-                                  // ),
-                                  // color: Colors.white,
                                   child: Text(
                                     'Save as Favorite',
                                     style: TextStyle(

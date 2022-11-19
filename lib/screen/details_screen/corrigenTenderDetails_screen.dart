@@ -5,6 +5,8 @@ import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_event.dar
 import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_state.dart';
 import '../../bloc/details_bloc/today_details/todayTenderDetails_bloc.dart';
 import '../../bloc/details_bloc/today_details/todayTenderDetails_state.dart';
+import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
+import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../model/details_model/corrigenTenderDetails.dart';
 import '../../model/details_model/todayTenderDetails.dart';
 import '../../repository/details_repo/corrigenTenderDetails_repo.dart';
@@ -519,12 +521,13 @@ class CorrigenTenderDetailsScreen extends StatelessWidget {
                                     elevation: 5.0,
                                   ),
                                   onPressed: () {
-                                    // code =
-                                    // list[index]["tendercode"];
-                                    // print(code);
-                                    // setState(() {
-                                    //   show();
-                                    // });
+                                    BlocProvider.of<SaveTenderBloc>(context)
+                                        .add(
+                                      SaveTenderSubmittedEvent(
+                                        email: 'masrafianam@gmail.com',
+                                        tenderCode: userList[index].tendercode,
+                                      ),
+                                    );
                                   },
                                   // padding: EdgeInsets.all(15.0),
                                   // shape: RoundedRectangleBorder(

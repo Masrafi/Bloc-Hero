@@ -1,45 +1,41 @@
-import 'package:bdtender_bloc/repository/details_repo/todayTenderDetails_repo.dart';
+import 'package:bdtender_bloc/model/saveTender_show.dart';
+import 'package:bdtender_bloc/repository/saveTenderShow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/details_bloc/private_details/privateTenderDetails_bloc.dart';
-import '../../bloc/details_bloc/private_details/privateTenderDetails_event.dart';
-import '../../bloc/details_bloc/private_details/privateTenderDetails_state.dart';
-import '../../bloc/details_bloc/today_details/todayTenderDetails_bloc.dart';
-import '../../bloc/details_bloc/today_details/todayTenderDetails_event.dart';
-import '../../bloc/details_bloc/today_details/todayTenderDetails_state.dart';
 import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_event.dart';
-import '../../model/details_model/privateTenderDetails.dart';
-import '../../model/details_model/todayTenderDetails.dart';
-import '../../repository/details_repo/privateTenderDetails_repo.dart';
 import '../../utils/heder.dart';
+import '../bloc/saveTenderShow_bloc/saveTenderShow_bloc.dart';
+import '../bloc/saveTenderShow_bloc/saveTenderShow_event.dart';
+import '../bloc/saveTenderShow_bloc/saveTenderShow_state.dart';
 
-class PrivateTenderDetailsScreen extends StatelessWidget {
-  const PrivateTenderDetailsScreen({Key? key}) : super(key: key);
+class SaveTenderShowScreen extends StatelessWidget {
+  const SaveTenderShowScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PrivateTenderDetailsBloc(
-        RepositoryProvider.of<RepositoryPrivateTenderDetails>(context),
-      )..add(PrivateTenderDetailsLoadEvent()),
+      create: (context) => SaveTenderShowBloc(
+        RepositoryProvider.of<RepositorySaveTenderShow>(context),
+      )..add(
+          SaveTenderShowLoadEvent(),
+        ),
       child: Scaffold(
-          appBar: header(context, titleText: "Private"),
-          body:
-              BlocBuilder<PrivateTenderDetailsBloc, PrivateTenderDetailsState>(
-                  builder: (context, state) {
-            if (state is PrivateTenderDetailsLoadingState) {
+          appBar: header(context, titleText: "Save Tender Show"),
+          body: BlocBuilder<SaveTenderShowBloc, SaveTenderShowState>(
+              builder: (context, state) {
+            if (state is SaveTenderShowLoadingState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            if (state is PrivateTenderDetailsErrorState) {
+            if (state is SaveTenderShowErrorState) {
               return Center(
                 child: Text("Error"),
               );
             }
-            if (state is PrivateTenderDetailsLoadedState) {
-              List<PrivateTenderDetailsModel> userList = state.users;
+            if (state is SaveTenderShowLoadedState) {
+              List<SaveTenderShow> userList = state.users;
               return ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -227,7 +223,7 @@ class PrivateTenderDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      userList[index].sectorname ??
+                                      userList[index].sectorcode ??
                                           "View Image",
                                       style: TextStyle(
                                         color: Colors.black,
@@ -538,7 +534,7 @@ class PrivateTenderDetailsScreen extends StatelessWidget {
                                   // ),
                                   // color: Colors.white,
                                   child: Text(
-                                    'Save as Favorite',
+                                    'Remove',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,

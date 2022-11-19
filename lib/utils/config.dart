@@ -11,4 +11,8 @@ class Config {
   static const PRIVATE_DETAILS = Base_URL + "own-tender-notice";
   static const LIVE_DETAILS = Base_URL + "live-tender";
   static const TODAY_DETAILS = Base_URL + "today-tender";
+
+  static const LOGIN = Base_URL + "login";
+  static const SAVE_TENDER = Base_URL + "save-wish-list";
+  static const SHOW_SAVE_TENDER = Base_URL + "show-wish-list";
 }

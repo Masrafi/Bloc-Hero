@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/details_bloc/Live_details/liveTenderDetails_bloc.dart';
 import '../../bloc/details_bloc/Live_details/liveTenderDetails_event.dart';
 import '../../bloc/details_bloc/Live_details/liveTenderDetails_state.dart';
+import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
+import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../model/details_model/live111TenderDetails.dart';
 import '../../repository/details_repo/liveTenderDetails_repo.dart';
 import '../../utils/heder.dart';
@@ -514,12 +516,13 @@ class LiveTenderDetailsScreen extends StatelessWidget {
                                     elevation: 5.0,
                                   ),
                                   onPressed: () {
-                                    // code =
-                                    // list[index]["tendercode"];
-                                    // print(code);
-                                    // setState(() {
-                                    //   show();
-                                    // });
+                                    BlocProvider.of<SaveTenderBloc>(context)
+                                        .add(
+                                      SaveTenderSubmittedEvent(
+                                        email: 'masrafianam@gmail.com',
+                                        tenderCode: userList[index].tendercode,
+                                      ),
+                                    );
                                   },
                                   // padding: EdgeInsets.all(15.0),
                                   // shape: RoundedRectangleBorder(

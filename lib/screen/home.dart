@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
       ],
       child: Scaffold(
         appBar: header(context, titleText: 'BDTender'),
-        body: Column(
+        body: ListView(
           children: [
             SizedBox(
               height: 20,
@@ -181,165 +181,19 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 10,
             ),
-            // Center(
-            //   child: Text(
-            //     'Daily tender status: ',
-            //     style: TextStyle(
-            //       fontSize: displayWidth(context) * 0.05,
-            //
-            //       fontWeight: FontWeight.bold,
-            //       //fontStyle: FontStyle.italic
-            //     ),
-            //   ),
-            // ),
-            Center(
-              child: Text(
-                "Browse by...",
-                style: TextStyle(
-                  fontSize: 15,
-
-                  fontWeight: FontWeight.bold,
-                  //fontStyle: FontStyle.italic
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/category')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Categories",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/organization')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Departments",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/districts')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Districts",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender-today')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Deadline",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
             Center(
               child: Text(
                 'Daily tender status: ',
                 style: TextStyle(
                   fontSize: 16,
-
                   fontWeight: FontWeight.bold,
                   //fontStyle: FontStyle.italic
                 ),
               ),
             ),
-
             SizedBox(
               height: 10,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -359,8 +213,7 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (context) => Pay()));
+                Navigator.pushNamed(context, '/savetendershow');
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -397,7 +250,7 @@ class _HomeState extends State<Home> {
                       width: MediaQuery.of(context).size.height / 50,
                     ),
                     Text(
-                      "Pay Now",
+                      "Favorite Tender",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 55,
                         color: Colors.black,

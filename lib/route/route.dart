@@ -3,8 +3,10 @@ import 'package:bdtender_bloc/repository/corrigen_repo.dart';
 import 'package:bdtender_bloc/repository/live_repo.dart';
 import 'package:bdtender_bloc/repository/private_repo.dart';
 import 'package:bdtender_bloc/repository/details_repo/todayTenderDetails_repo.dart';
+import 'package:bdtender_bloc/repository/saveTenderShow.dart';
 import 'package:bdtender_bloc/screen/home.dart';
 import 'package:bdtender_bloc/screen/login_screen.dart';
+import 'package:bdtender_bloc/screen/saveTenderShow_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,6 +90,14 @@ class Routes {
           builder: (context) => RepositoryProvider(
             create: (context) => RepositoryLiveTenderDetails(),
             child: LiveTenderDetailsScreen(),
+          ),
+        );
+
+      case "/savetendershow":
+        return MaterialPageRoute(
+          builder: (context) => RepositoryProvider(
+            create: (context) => RepositorySaveTenderShow(),
+            child: SaveTenderShowScreen(),
           ),
         );
       //
