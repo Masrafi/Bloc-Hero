@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_bloc.dart';
 import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_event.dart';
 import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_state.dart';
-import '../../bloc/details_bloc/today_details/todayTenderDetails_bloc.dart';
-import '../../bloc/details_bloc/today_details/todayTenderDetails_state.dart';
 import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../bloc/saveTender_bloc/saveTender_state.dart';
@@ -36,8 +34,6 @@ class CorrigenTenderDetailsScreen extends StatelessWidget {
           body: BlocListener<SaveTenderBloc, SaveTenderState>(
             listener: (context, state) {
               if (state is SaveTenderFailState) {
-                print(
-                    "SaveTenderFailStateSaveTenderFailStateSaveTenderFailStateSaveTenderFailStateSaveTenderFailState");
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Tender save fail'),
@@ -45,9 +41,6 @@ class CorrigenTenderDetailsScreen extends StatelessWidget {
                 );
               }
               if (state is SaveTenderSuccessState) {
-                print(
-                    "SaveTenderSuccessStateSaveTenderSuccessStateSaveTenderSuccessStateSaveTenderSuccessState");
-
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Tender save Successfully'),

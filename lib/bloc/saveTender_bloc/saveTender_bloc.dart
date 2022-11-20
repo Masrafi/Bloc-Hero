@@ -17,7 +17,6 @@ class SaveTenderBloc extends Bloc<SaveTenderEvent, SaveTenderState> {
           "Email": event.email,
           "tendercode": event.tenderCode,
         });
-        print("This is response ferom save tender: ${response.body}");
         if (jsonDecode(response.body) == "Success") {
           emit(SaveTenderSuccessState());
         } else {

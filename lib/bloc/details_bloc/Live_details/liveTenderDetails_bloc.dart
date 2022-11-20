@@ -16,7 +16,6 @@ class LiveTenderDetailsBloc
         final user = await _repository.getLiveTenderDetailsData();
         emit(LiveTenderDetailsLoadedState(user));
       } catch (e) {
-        print("This is error: ${e.toString()}");
         emit(LiveTenderDetailsErrorState(e.toString()));
       }
     });

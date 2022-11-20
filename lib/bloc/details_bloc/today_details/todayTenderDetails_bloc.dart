@@ -15,7 +15,6 @@ class TodayTenderDetailsBloc
         final user = await _repository.getTodayTenderDetailsData();
         emit(TodayTenderDetailsLoadedState(user));
       } catch (e) {
-        print("This is error: ${e.toString()}");
         emit(TodayTenderDetailsErrorState(e.toString()));
       }
     });

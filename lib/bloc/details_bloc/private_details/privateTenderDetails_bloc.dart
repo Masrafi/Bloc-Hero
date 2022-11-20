@@ -16,7 +16,6 @@ class PrivateTenderDetailsBloc
         final user = await _repository.getPrivateTenderDetailsData();
         emit(PrivateTenderDetailsLoadedState(user));
       } catch (e) {
-        print("This is error: ${e.toString()}");
         emit(PrivateTenderDetailsErrorState(e.toString()));
       }
     });

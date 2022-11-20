@@ -31,8 +31,6 @@ class LiveTenderDetailsScreen extends StatelessWidget {
           body: BlocListener<SaveTenderBloc, SaveTenderState>(
             listener: (context, state) {
               if (state is SaveTenderFailState) {
-                print(
-                    "SaveTenderFailStateSaveTenderFailStateSaveTenderFailStateSaveTenderFailStateSaveTenderFailState");
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Tender save fail'),
@@ -40,9 +38,6 @@ class LiveTenderDetailsScreen extends StatelessWidget {
                 );
               }
               if (state is SaveTenderSuccessState) {
-                print(
-                    "SaveTenderSuccessStateSaveTenderSuccessStateSaveTenderSuccessStateSaveTenderSuccessState");
-
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Tender save Successfully'),

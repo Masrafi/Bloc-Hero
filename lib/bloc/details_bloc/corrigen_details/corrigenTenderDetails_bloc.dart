@@ -16,7 +16,6 @@ class CorrigenTenderDetailsBloc
         final user = await _repository.getCorrigenTenderDetailsData();
         emit(CorrigenTenderDetailsLoadedState(user));
       } catch (e) {
-        print("This is error: ${e.toString()}");
         emit(CorrigenTenderDetailsErrorState(e.toString()));
       }
     });
