@@ -6,20 +6,23 @@ import 'package:bdtender_bloc/utils/color.dart';
 import 'package:bdtender_bloc/utils/heder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../bloc/privateCount_bloc/privateCount_event.dart';
 import '../bloc/corrigenCount_bloc/corrigenCount_bloc.dart';
 import '../bloc/corrigenCount_bloc/corrigenCount_event.dart';
 import '../bloc/corrigenCount_bloc/corrigenCount_state.dart';
 import '../bloc/liveCount_bloc/liveCount_bloc.dart';
 import '../bloc/liveCount_bloc/liveCount_event.dart';
 import '../bloc/liveCount_bloc/liveCount_state.dart';
-import '../bloc/privateCount_bloc /privateCount_bloc.dart';
-import '../bloc/privateCount_bloc /privateCount_event.dart';
-import '../bloc/privateCount_bloc /privateCount_state.dart';
+import '../bloc/privateCount_bloc/privateCount_bloc.dart';
+import '../bloc/privateCount_bloc/privateCount_state.dart';
 import '../bloc/todayCount_bloc/todayCount_bloc.dart';
 import '../bloc/todayCount_bloc/todayCount_event.dart';
 import '../bloc/todayCount_bloc/todayCount_state.dart';
 import '../repository/today_repo.dart';
+import '../widget/Corrigen_widget.dart';
+import '../widget/live_widget.dart';
+import '../widget/private_widget.dart';
+import '../widget/today_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -63,7 +66,7 @@ class _HomeState extends State<Home> {
       ],
       child: Scaffold(
         appBar: header(context, titleText: 'BDTender'),
-        body: Column(
+        body: ListView(
           children: [
             SizedBox(
               height: 20,
@@ -83,9 +86,10 @@ class _HomeState extends State<Home> {
                     Text(
                       'Find all your desired tenders',
                       style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -137,18 +141,22 @@ class _HomeState extends State<Home> {
                               ),
                               child: Container(
                                 height: 40,
-                                child: RaisedButton(
-                                  elevation: 5.0,
+                                child: ElevatedButton(
+                                  //elevation: 5.0,
+                                  style: ElevatedButton.styleFrom(
+                                    primary: color.whiteW, // background
+                                    // foreground
+                                  ),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       //masrafi();
                                     }
                                   },
-                                  padding: EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  color: Colors.white,
+                                  // padding: EdgeInsets.all(10),
+                                  // shape: RoundedRectangleBorder(
+                                  //   borderRadius: BorderRadius.circular(12.0),
+                                  // ),
+                                  //color: Colors.white,
                                   child: Text(
                                     'Search',
                                     style: TextStyle(
@@ -173,284 +181,24 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 10,
             ),
-            // Center(
-            //   child: Text(
-            //     'Daily tender status: ',
-            //     style: TextStyle(
-            //       fontSize: displayWidth(context) * 0.05,
-            //
-            //       fontWeight: FontWeight.bold,
-            //       //fontStyle: FontStyle.italic
-            //     ),
-            //   ),
-            // ),
-            Center(
-              child: Text(
-                "Browse by...",
-                style: TextStyle(
-                  fontSize: 15,
-
-                  fontWeight: FontWeight.bold,
-                  //fontStyle: FontStyle.italic
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/category')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Categories",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/organization')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Departments",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender/districts')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Districts",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FourOption(
-                    //             'https://www.bdtender.com/tender-today')));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.height / 100,
-                      right: MediaQuery.of(context).size.height / 100,
-                      top: MediaQuery.of(context).size.height / 70,
-                      bottom: MediaQuery.of(context).size.height / 70,
-                    ),
-                    decoration: BoxDecoration(
-                      color: color.theme,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Deadline",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
             Center(
               child: Text(
                 'Daily tender status: ',
                 style: TextStyle(
                   fontSize: 16,
-
                   fontWeight: FontWeight.bold,
                   //fontStyle: FontStyle.italic
                 ),
               ),
             ),
-
             SizedBox(
               height: 10,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                BlocBuilder<TodayCountBloc, TodayCountState>(
-                    builder: (context, state) {
-                  if (state is TodayCountLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is TodayCountErrorState) {
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  }
-                  if (state is TodayCountLoadedState) {
-                    List<TodayCountModel> userList = state.users;
-                    return SizedBox(
-                      height: 40,
-                      width: 100,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: userList.length,
-                          itemBuilder: (_, index) {
-                            return InkWell(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: color.theme,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Today’s",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        userList[index].message,
-                                        style: TextStyle(fontSize: 14),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             TodayPublishTender()));
-                              },
-                            );
-                          }),
-                    );
-                  }
-                  return Container();
-                }),
-                BlocBuilder<CorrigenCountBloc, CorrigenCountState>(
-                    builder: (context, state) {
-                  if (state is CorrigenCountLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is CorrigenCountErrorState) {
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  }
-                  if (state is CorrigenCountLoadedState) {
-                    List<TodayCountModel> userList = state.users;
-                    return SizedBox(
-                      height: 40,
-                      width: 120,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: userList.length,
-                          itemBuilder: (_, index) {
-                            return InkWell(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: color.theme,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Corrigendum",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        userList[index].message,
-                                        style: TextStyle(fontSize: 14),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             TodayPublishTender()));
-                              },
-                            );
-                          }),
-                    );
-                  }
-                  return Container();
-                }),
+                Today(),
+                Corrigen(),
               ],
             ),
             SizedBox(
@@ -459,128 +207,13 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BlocBuilder<PrivateCountBloc, PrivateCountState>(
-                    builder: (context, state) {
-                  if (state is PrivateCountLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is PrivateCountErrorState) {
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  }
-                  if (state is PrivateCountLoadedState) {
-                    List<TodayCountModel> userList = state.users;
-                    return SizedBox(
-                      height: 40,
-                      width: 100,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: userList.length,
-                          itemBuilder: (_, index) {
-                            return InkWell(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: color.theme,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Private",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        userList[index].message,
-                                        style: TextStyle(fontSize: 14),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             TodayPublishTender()));
-                              },
-                            );
-                          }),
-                    );
-                  }
-                  return Container();
-                }),
-                BlocBuilder<LiveCountBloc, LiveCountState>(
-                    builder: (context, state) {
-                  if (state is LiveCountLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is LiveCountErrorState) {
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  }
-                  if (state is LiveCountLoadedState) {
-                    List<TodayCountModel> userList = state.users;
-                    return SizedBox(
-                      height: 40,
-                      width: 120,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: userList.length,
-                          itemBuilder: (_, index) {
-                            return InkWell(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: color.theme,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Live Tender",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        userList[index].message,
-                                        style: TextStyle(fontSize: 14),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             TodayPublishTender()));
-                              },
-                            );
-                          }),
-                    );
-                  }
-                  return Container();
-                }),
+                Private(),
+                Live(),
               ],
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (context) => Pay()));
+                Navigator.pushNamed(context, '/savetendershow');
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -617,7 +250,7 @@ class _HomeState extends State<Home> {
                       width: MediaQuery.of(context).size.height / 50,
                     ),
                     Text(
-                      "Pay Now",
+                      "Favorite Tender",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 55,
                         color: Colors.black,

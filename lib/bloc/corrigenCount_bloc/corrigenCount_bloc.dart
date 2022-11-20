@@ -12,11 +12,9 @@ class CorrigenCountBloc extends Bloc<CorrigenCountEvent, CorrigenCountState> {
     on<CorrigenCountLoadEvent>((event, emit) async {
       emit(CorrigenCountLoadingState());
       try {
-        print("This is try");
-        final user = await _repository.getTodayCountData();
+        final user = await _repository.getCorrigenCountData();
         emit(CorrigenCountLoadedState(user));
       } catch (e) {
-        print("This is catch: ${e.toString()}");
         emit(CorrigenCountErrorState(e.toString()));
       }
     });

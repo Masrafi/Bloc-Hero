@@ -11,11 +11,9 @@ class TodayCountBloc extends Bloc<TodayCountEvent, TodayCountState> {
     on<TodayCountLoadEvent>((event, emit) async {
       emit(TodayCountLoadingState());
       try {
-        print("This is try");
         final user = await _repository.getTodayCountData();
         emit(TodayCountLoadedState(user));
       } catch (e) {
-        print("This is catch: ${e.toString()}");
         emit(TodayCountErrorState(e.toString()));
       }
     });

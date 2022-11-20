@@ -15,4 +15,5 @@ class Config {
   static const LOGIN = Base_URL + "login";
   static const SAVE_TENDER = Base_URL + "save-wish-list";
   static const SHOW_SAVE_TENDER = Base_URL + "show-wish-list";
+  static const DELETE_SAVE_TENDER = Base_URL + "delete-wish-list";
 }

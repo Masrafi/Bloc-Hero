@@ -23,14 +23,14 @@ class Live extends StatelessWidget {
         );
       }
       if (state is LiveCountLoadedState) {
-        List<TodayCountModel> userList = state.users;
+        List<TodayCountModel> dataList = state.users;
         return SizedBox(
           height: 40,
           width: 120,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: userList.length,
+              itemCount: dataList.length,
               itemBuilder: (_, index) {
                 return InkWell(
                   child: Row(
@@ -47,7 +47,7 @@ class Live extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            userList[index].message,
+                            dataList[index].message,
                             style: TextStyle(fontSize: 14),
                           )
                         ],

@@ -23,14 +23,14 @@ class Private extends StatelessWidget {
         );
       }
       if (state is PrivateCountLoadedState) {
-        List<TodayCountModel> userList = state.users;
+        List<TodayCountModel> dataList = state.users;
         return SizedBox(
           height: 40,
           width: 100,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: userList.length,
+              itemCount: dataList.length,
               itemBuilder: (_, index) {
                 return InkWell(
                   child: Row(
@@ -47,7 +47,7 @@ class Private extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            userList[index].message,
+                            dataList[index].message,
                             style: TextStyle(fontSize: 14),
                           )
                         ],

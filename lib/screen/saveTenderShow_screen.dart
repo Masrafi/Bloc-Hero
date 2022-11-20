@@ -1,3 +1,5 @@
+import 'package:bdtender_bloc/bloc/saveTenderDelete_bloc/saveTenderDelete_bloc.dart';
+import 'package:bdtender_bloc/bloc/saveTenderDelete_bloc/saveTenderDelete_state.dart';
 import 'package:bdtender_bloc/model/saveTender_show.dart';
 import 'package:bdtender_bloc/repository/saveTenderShow.dart';
 import 'package:flutter/material.dart';
@@ -5,554 +7,587 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../utils/heder.dart';
+import '../bloc/login_bloc/login_bloc.dart';
+import '../bloc/login_bloc/login_event.dart';
+import '../bloc/saveTenderDelete_bloc/saveTenderDelete_event.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_bloc.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_event.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_state.dart';
 
-class SaveTenderShowScreen extends StatelessWidget {
+class SaveTenderShowScreen extends StatefulWidget {
   const SaveTenderShowScreen({Key? key}) : super(key: key);
 
   @override
+  State<SaveTenderShowScreen> createState() => _SaveTenderShowScreenState();
+}
+
+class _SaveTenderShowScreenState extends State<SaveTenderShowScreen> {
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SaveTenderShowBloc(
-        RepositoryProvider.of<RepositorySaveTenderShow>(context),
-      )..add(
-          SaveTenderShowLoadEvent(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SaveTenderShowBloc(
+            RepositoryProvider.of<RepositorySaveTenderShow>(context),
+          )..add(
+              SaveTenderShowLoadEvent(),
+            ),
         ),
+        BlocProvider(create: (_) => SaveTenderDeleteBloc()),
+      ],
       child: Scaffold(
           appBar: header(context, titleText: "Save Tender Show"),
-          body: BlocBuilder<SaveTenderShowBloc, SaveTenderShowState>(
-              builder: (context, state) {
-            if (state is SaveTenderShowLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is SaveTenderShowErrorState) {
-              return Center(
-                child: Text("Error"),
-              );
-            }
-            if (state is SaveTenderShowLoadedState) {
-              List<SaveTenderShow> userList = state.users;
-              return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: userList.length,
-                  itemBuilder: (_, index) {
-                    return Container(
-                      padding: EdgeInsets.all(15),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        elevation: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                userList[index].workdesc ?? "View Image",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'OpenSans',
+          body: BlocListener<SaveTenderDeleteBloc, SaveTenderDeleteState>(
+            listener: (context, state) {
+              if (state is SaveTenderDeleteFailState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Remove fail'),
+                  ),
+                );
+              }
+              if (state is SaveTenderDeleteSuccessState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Remove Successfully'),
+                  ),
+                );
+              }
+            },
+            child: BlocBuilder<SaveTenderShowBloc, SaveTenderShowState>(
+                builder: (context, state) {
+              if (state is SaveTenderShowLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is SaveTenderShowErrorState) {
+                return Center(
+                  child: Text("Empty"),
+                );
+              }
+              if (state is SaveTenderShowLoadedState) {
+                List<SaveTenderShow> dataList = state.users;
+                return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: dataList.length,
+                    itemBuilder: (_, index) {
+                      return Container(
+                        padding: EdgeInsets.all(15),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              //mainAxisAlignment: MainAxisAlignment.,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  dataList[index].workdesc ?? "View Image",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'OpenSans',
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Tender ID:",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Tender ID:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].tendercode ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Content Type: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                        userList[index].tenderContentType ??
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].tendercode ??
                                             "View Image",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16,
                                           fontFamily: 'OpenSans',
-                                        )),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Published on:",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].issudate ?? "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Location: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].distcode ?? "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Source: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].tendersource ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Sector:",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].sectorcode ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Ear. Money: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].ernestamt ?? "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Doc. Price: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].seduleprice ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Pur. Last Date: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].tpurchesdate ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Pre. Met. Date: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].prebidMeetingDate ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Sub. Date: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].tsubmissiondate ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Opening Date:",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].tboxopendate ??
-                                          "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Visitor: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      userList[index].visitors ?? "View Image",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              /*SizedBox(
-                                  height: 10,
-                                ),*/
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "View Image: ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: InkWell(
-                                    child: Container(
-                                      height: 30,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(7),
                                         ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.image,
-                                            color: Colors.white,
-                                            size: 30,
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Content Type: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                          dataList[index].tenderContentType ??
+                                              "View Image",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontFamily: 'OpenSans',
+                                          )),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Published on:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].issudate ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Location: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].distcode ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Source: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].tendersource ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Sector:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].sectorcode ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Ear. Money: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].ernestamt ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Doc. Price: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].seduleprice ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Pur. Last Date: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].tpurchesdate ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Pre. Met. Date: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].prebidMeetingDate ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Sub. Date: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].tsubmissiondate ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Opening Date:",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].tboxopendate ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Visitor: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        dataList[index].visitors ??
+                                            "View Image",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                /*SizedBox(
+                                      height: 10,
+                                    ),*/
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "View Image: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                        child: InkWell(
+                                      child: Container(
+                                        height: 30,
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(7),
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            'View Notice',
-                                            style: TextStyle(
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.image,
                                               color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: 'OpenSans',
+                                              size: 30,
                                             ),
-                                          )
-                                        ],
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              'View Notice',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'OpenSans',
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    onTap: () async {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             WebViewExample(
-                                      //                 list[index][
-                                      //                 "tendercode"])));
-                                    },
-                                  )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                //padding: EdgeInsets.symmetric(vertical: 25.0),
-                                // width: double.infinity,
-                                padding: EdgeInsets.only(
-                                  left: 20,
-                                  right: 30,
+                                      onTap: () async {
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             WebViewExample(
+                                        //                 list[index][
+                                        //                 "tendercode"])));
+                                      },
+                                    )),
+                                  ],
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  //padding: EdgeInsets.symmetric(vertical: 25.0),
+                                  // width: double.infinity,
+                                  padding: EdgeInsets.only(
+                                    left: 20,
+                                    right: 30,
+                                  ),
 
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    elevation: 5.0,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<SaveTenderBloc>(context)
-                                        .add(
-                                      SaveTenderSubmittedEvent(
-                                        email: 'masrafianam@gmail.com',
-                                        tenderCode: userList[index].tendercode,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      //backgroundColor: Colors.white,
+                                      elevation: 5.0,
+                                    ),
+                                    onPressed: () {
+                                      BlocProvider.of<SaveTenderDeleteBloc>(
+                                              context)
+                                          .add(
+                                        SaveTenderDeleteSubmittedEvent(
+                                          email: 'masrafianam@gmail.com',
+                                          tenderCode:
+                                              dataList[index].tendercode,
+                                        ),
+                                      );
+                                      setState(() {
+                                        dataList.remove(dataList[index]);
+                                      });
+                                    },
+                                    child: Text(
+                                      'Remove',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'OpenSans',
                                       ),
-                                    );
-                                  },
-                                  // padding: EdgeInsets.all(15.0),
-                                  // shape: RoundedRectangleBorder(
-                                  //   borderRadius:
-                                  //       BorderRadius.circular(
-                                  //           12.0),
-                                  // ),
-                                  // color: Colors.white,
-                                  child: Text(
-                                    'Remove',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'OpenSans',
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  });
-            }
-            return Container();
-          })),
+                      );
+                    });
+              }
+              return Container();
+            }),
+          )),
     );
   }
 }
