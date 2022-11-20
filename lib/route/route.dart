@@ -37,12 +37,6 @@ class Routes {
             child: LoginScreen(),
           ),
         );
-
-      // case "/home":
-      //   return MaterialPageRoute(
-      //     builder: (context) => Home(),
-      //   );
-
       case "/home":
         return MaterialPageRoute(
           builder: (context) => MultiRepositoryProvider(
@@ -63,7 +57,6 @@ class Routes {
             child: Home(),
           ),
         );
-
       case "/todayDetails":
         return MaterialPageRoute(
           builder: (context) => RepositoryProvider(
@@ -92,7 +85,6 @@ class Routes {
             child: LiveTenderDetailsScreen(),
           ),
         );
-
       case "/savetendershow":
         return MaterialPageRoute(
           builder: (context) => RepositoryProvider(
@@ -100,67 +92,6 @@ class Routes {
             child: SaveTenderShowScreen(),
           ),
         );
-      //
-      // case "/internet":
-      //   Map<String, dynamic> arguments =
-      //   settings.arguments as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider(
-      //       create: (context) => InternetCubit(),
-      //       child: InternetHome(
-      //         email: arguments["title"],
-      //         pass: arguments["pass"],
-      //       ),
-      //     ),
-      //   );
-      //
-      // case "/signup":
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider(
-      //       create: (context) => SignUpBloc(),
-      //       child: SignUpScreen(),
-      //     ),
-      //   );
-      //
-      // case "/viewdata":
-      //   Map<String, dynamic> arguments =
-      //   settings.arguments as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (context) => ViewData(
-      //       fname: arguments["fname"],
-      //       lname: arguments["lname"],
-      //       email: arguments["email"],
-      //       pass: arguments["pass"],
-      //     ),
-      //   );
-      //
-
-      //
-      // case "/viewdataAPI":
-      //   Map<String, dynamic> arguments =
-      //   settings.arguments as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (context) => ViewDataAPI(
-      //       model: arguments['model'],
-      //     ),
-      //   );
-      //
-      // case "/httppost":
-      //   return MaterialPageRoute(
-      //     builder: (context) => RepositoryProvider(
-      //       create: (context) => ProductRepository(),
-      //       child: HttpCheck(),
-      //     ),
-      //   );
-
-      // case "/calldata":
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider(
-      //       create: (context) => ProductBloc(productRepository: ),
-      //       child: SignUpScreen(),
-      //     ),
-      //   );
-
       default:
         return null;
     }
