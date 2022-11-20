@@ -8,7 +8,7 @@ import '../../utils/config.dart';
 
 class RepositoryTodayTenderDetails {
   String endPoint = Config.TODAY_DETAILS;
-  getTodayTenderDetailsData() async {
+  Future getTodayTenderDetailsData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);

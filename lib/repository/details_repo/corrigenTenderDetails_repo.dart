@@ -9,7 +9,7 @@ import '../../utils/config.dart';
 
 class RepositoryCorrigenTenderDetails {
   String endPoint = Config.CORRIGEN_DETAILS;
-  getCorrigenTenderDetailsData() async {
+  Future getCorrigenTenderDetailsData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);

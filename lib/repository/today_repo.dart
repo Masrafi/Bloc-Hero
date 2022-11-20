@@ -7,7 +7,7 @@ import '../utils/config.dart';
 
 class RepositoryToday {
   var endPoint = Config.TODAY_REPO;
-  getTodayCountData() async {
+  Future getTodayCountData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);

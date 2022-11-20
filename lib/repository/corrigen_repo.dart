@@ -7,7 +7,7 @@ import '../model/todayCount_model.dart';
 
 class RepositoryCorrigen {
   var endPoint = Config.CORRIGEN_REPO;
-  getCorrigenCountData() async {
+  Future getCorrigenCountData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);

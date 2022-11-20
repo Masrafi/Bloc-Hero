@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 class RepositorySaveTenderShow {
   var endPoint = Config.SHOW_SAVE_TENDER;
-  getSaveTendewrShowCountData() async {
+  Future getSaveTendewrShowCountData() async {
     Response response = await post(Uri.parse(endPoint),
         body: {"Email": "masrafianam@gmail.com"});
     if (response.statusCode == 200) {

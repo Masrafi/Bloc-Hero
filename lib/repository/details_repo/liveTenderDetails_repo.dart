@@ -6,7 +6,7 @@ import '../../utils/config.dart';
 
 class RepositoryLiveTenderDetails {
   String endPoint = Config.LIVE_DETAILS;
-  getLiveTenderDetailsData() async {
+  Future getLiveTenderDetailsData() async {
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
