@@ -1,5 +1,5 @@
 class Config {
-  static const Base_URL = "";
+  static const Base_URL = "https://www.bdtender.com/api/";
 
   //static const Base_URL = "https://3.109.36.149/";
   static const CORRIGEN_REPO = Base_URL + "count-corrigendum-tender";
@@ -16,4 +16,6 @@ class Config {
   static const SAVE_TENDER = Base_URL + "save-wish-list";
   static const SHOW_SAVE_TENDER = Base_URL + "show-wish-list";
   static const DELETE_SAVE_TENDER = Base_URL + "delete-wish-list";
+
+  static const CATEGORY_GROUP = Base_URL + "top-categorygroup";
 }

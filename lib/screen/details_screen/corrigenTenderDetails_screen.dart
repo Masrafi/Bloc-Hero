@@ -7,7 +7,6 @@ import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../bloc/saveTender_bloc/saveTender_state.dart';
 import '../../model/details_model/corrigenTenderDetails.dart';
-import '../../model/details_model/todayTenderDetails.dart';
 import '../../repository/details_repo/corrigenTenderDetails_repo.dart';
 import '../../utils/heder.dart';
 
