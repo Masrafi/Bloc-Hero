@@ -13,6 +13,12 @@ class RelatedCategoryLoadingState extends RelatedCategoryState {
   List<Object?> get props => [];
 }
 
+class RelatedCategoryInitialState extends RelatedCategoryState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
 class RelatedCategoryLoadedState extends RelatedCategoryState {
   RelatedCategoryLoadedState(this.users);
   final List<RelatedCategoryModel> users;
@@ -22,6 +28,12 @@ class RelatedCategoryLoadedState extends RelatedCategoryState {
 }
 
 class RelatedCategoryErrorState extends RelatedCategoryState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+class RelatedCategoryNotSearchState extends RelatedCategoryState {
   @override
   // TODO: implement props
   List<Object?> get props => [];

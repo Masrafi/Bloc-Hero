@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:http/http.dart' as http;
 
+import '../../bloc/registration/relatedCategory_bloc/relatedCategory_event.dart';
 import '../../utils/heder.dart';
 
 class ReletedCategory extends StatefulWidget {
@@ -119,8 +120,8 @@ class _ReletedCategoryState extends State<ReletedCategory> {
                           }
                         },
                         child: Container(
-                          height: 15,
-                          width: 20,
+                          height: 40,
+                          width: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             color: Colors.pink,
@@ -154,6 +155,23 @@ class _ReletedCategoryState extends State<ReletedCategory> {
             }
             if (state is RelatedCategoryErrorState) {
               return Center(child: Text("Error"));
+            }
+            if (state is RelatedCategoryNotSearchState) {
+              return Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<RelatedCategoryBloc>(context).add(
+                        RelatedCategorySubmittedEvent(ghCode: "1"),
+                      );
+                    },
+                    child: Text(
+                      "Click",
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
+                    )),
+              );
             }
             return Container();
           },

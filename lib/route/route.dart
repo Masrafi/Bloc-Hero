@@ -121,10 +121,7 @@ class Routes {
         );
       case "/relatedgroup":
         return MaterialPageRoute(
-          builder: (context) => RepositoryProvider(
-            create: (context) => RepositoryRelatedCategory(),
-            child: ReletedCategory(),
-          ),
+          builder: (context) => ReletedCategory(),
         );
       default:
         return null;

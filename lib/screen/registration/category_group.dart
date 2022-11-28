@@ -42,9 +42,9 @@ class CategoryGroup extends StatelessWidget {
             RepositoryProvider.of<RepositoryCategoryGroup>(context),
           )..add(CategoryGroupLoadEvent()),
         ),
-        BlocProvider(
-          create: (_) => RelatedCategoryBloc(RepositoryRelatedCategory()),
-        ),
+        // BlocProvider(
+        //   create: (_) => RelatedCategoryBloc(RepositoryRelatedCategory()),
+        // ),
       ],
       child: Scaffold(
         appBar: header(context, titleText: 'BDTender'),
@@ -75,9 +75,9 @@ class CategoryGroup extends StatelessWidget {
                     onTap: () {
                       print(dataList[index].tghCode);
 
-                      BlocProvider.of<RelatedCategoryBloc>(context).add(
-                          RelatedCategorySubmittedEvent(
-                              dataList[index].tghCode.toString()));
+                      // BlocProvider.of<RelatedCategoryBloc>(context).add(
+                      //     RelatedCategorySubmittedEvent(
+                      //         dataList[index].tghCode.toString()));
                       Navigator.pushNamed(
                         context,
                         '/relatedgroup',

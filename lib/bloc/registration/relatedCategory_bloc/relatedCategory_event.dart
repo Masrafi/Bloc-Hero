@@ -8,7 +8,7 @@ abstract class RelatedCategoryEvent extends Equatable {
 
 class RelatedCategorySubmittedEvent extends RelatedCategoryEvent {
   final String ghCode;
-  RelatedCategorySubmittedEvent(this.ghCode);
+  RelatedCategorySubmittedEvent({required this.ghCode});
 
   @override
   // TODO: implement props

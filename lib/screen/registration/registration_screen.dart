@@ -49,7 +49,7 @@ class _RegistrationState extends State<Registration> {
                 title: new Text("BDTender"),
                 content: new Text("Already exists"),
                 actions: <Widget>[
-                  FlatButton(
+                  ElevatedButton(
                     child: Text('Close'),
                     onPressed: () {
                       Navigator.of(context).pop();

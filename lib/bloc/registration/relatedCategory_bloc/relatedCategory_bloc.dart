@@ -7,18 +7,20 @@ class RelatedCategoryBloc
     extends Bloc<RelatedCategoryEvent, RelatedCategoryState> {
   final RepositoryRelatedCategory _repository;
 
-  RelatedCategoryBloc(this._repository) : super(RelatedCategoryLoadingState()) {
+  RelatedCategoryBloc(this._repository)
+      : super(RelatedCategoryNotSearchState()) {
     on<RelatedCategorySubmittedEvent>(
       (event, emit) async {
-        emit(RelatedCategoryLoadingState());
-        print("........................................................");
-        try {
-          print("This is try");
-          final user = await _repository.getRelatedCategoryData(event.ghCode);
-          emit(RelatedCategoryLoadedState(user));
-        } catch (e) {
-          print("This is error: ${e.toString()}");
-          emit(RelatedCategoryErrorState());
+        if (event is RelatedCategorySubmittedEvent) {
+          emit(RelatedCategoryLoadingState());
+          try {
+            final user = await _repository.getRelatedCategoryData(event.ghCode);
+            emit(RelatedCategoryLoadedState(user));
+          } catch (e) {
+            emit(RelatedCategoryErrorState());
+          }
+        } else {
+          emit(RelatedCategoryNotSearchState());
         }
       },
     );
