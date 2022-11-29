@@ -4,35 +4,29 @@ import 'package:bdtender_bloc/model/registration_model/relatedCategory_model.dar
 import 'package:bdtender_bloc/repository/registration_repo/relatedCategory_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:convert';
-import 'package:responsive_builder/responsive_builder.dart';
-import 'package:http/http.dart' as http;
-
-import '../../bloc/registration/relatedCategory_bloc/relatedCategory_event.dart';
 import '../../utils/heder.dart';
 
 class ReletedCategory extends StatefulWidget {
-  List ghCode;
+  final List tGHCode;
   final String namer;
   final String degicnation;
   final String organization;
-  //final String address;
+  //final String _address;
   final String phoneNum;
   final String emailFirst;
   final String password;
   final String group;
   ReletedCategory({
-    Key? key,
-    required this.ghCode,
+    required this.tGHCode,
     required this.namer,
     required this.degicnation,
     required this.organization,
+    //this._address,
     required this.phoneNum,
     required this.emailFirst,
     required this.password,
     required this.group,
-  }) : super(key: key);
-
+  });
   @override
   _ReletedCategoryState createState() => _ReletedCategoryState();
 }
@@ -51,7 +45,7 @@ class _ReletedCategoryState extends State<ReletedCategory> {
 
   @override
   Widget build(BuildContext context) {
-    List data = widget.ghCode;
+    List data = widget.tGHCode;
     if (data.isNotEmpty) {
       for (int i = 0; i < data.length; i++) {
         check.add(false);
@@ -96,6 +90,8 @@ class _ReletedCategoryState extends State<ReletedCategory> {
               onTap: () async {
                 if (_list.isNotEmpty) {
                   print(_list);
+                  int score = await Future.delayed(
+                      const Duration(milliseconds: 200), () => 42);
 
                   // Navigator.push(
                   //     context,

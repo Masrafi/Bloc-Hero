@@ -126,7 +126,7 @@ class Routes {
           builder: (context) => RepositoryProvider(
             create: (context) => RepositoryRelatedCategory(),
             child: ReletedCategory(
-              ghCode: arguments["ghCode"],
+              tGHCode: arguments["tGHCode"],
               namer: arguments["namer"],
               degicnation: arguments["degicnation"],
               organization: arguments["organization"],
