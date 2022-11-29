@@ -120,8 +120,22 @@ class Routes {
           ),
         );
       case "/relatedgroup":
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (context) => ReletedCategory(),
+          builder: (context) => RepositoryProvider(
+            create: (context) => RepositoryRelatedCategory(),
+            child: ReletedCategory(
+              ghCode: arguments["ghCode"],
+              namer: arguments["namer"],
+              degicnation: arguments["degicnation"],
+              organization: arguments["organization"],
+              phoneNum: arguments["phoneNum"],
+              emailFirst: arguments["emailFirst"],
+              password: arguments["password"],
+              group: arguments["group"],
+            ),
+          ),
         );
       default:
         return null;

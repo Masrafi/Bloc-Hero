@@ -12,26 +12,27 @@ import '../../bloc/registration/relatedCategory_bloc/relatedCategory_event.dart'
 import '../../utils/heder.dart';
 
 class ReletedCategory extends StatefulWidget {
-  // final String tGHCode;
-  // final String _namer;
-  // final String _degicnation;
-  // final String _organization;
-  // //final String _address;
-  // final String _phoneNum;
-  // final String _emailFirst;
-  // final String _password;
-  // final String group;
-  // ReletedCategory(
-  //   this.tGHCode,
-  //   this._namer,
-  //   this._degicnation,
-  //   this._organization,
-  //   //this._address,
-  //   this._phoneNum,
-  //   this._emailFirst,
-  //   this._password,
-  //   this.group,
-  // );
+  List ghCode;
+  final String namer;
+  final String degicnation;
+  final String organization;
+  //final String address;
+  final String phoneNum;
+  final String emailFirst;
+  final String password;
+  final String group;
+  ReletedCategory({
+    Key? key,
+    required this.ghCode,
+    required this.namer,
+    required this.degicnation,
+    required this.organization,
+    required this.phoneNum,
+    required this.emailFirst,
+    required this.password,
+    required this.group,
+  }) : super(key: key);
+
   @override
   _ReletedCategoryState createState() => _ReletedCategoryState();
 }
@@ -50,132 +51,92 @@ class _ReletedCategoryState extends State<ReletedCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => RelatedCategoryBloc(RepositoryRelatedCategory()),
-      child: Scaffold(
-        appBar: header(context, titleText: ""),
-        body: BlocBuilder<RelatedCategoryBloc, RelatedCategoryState>(
-          builder: (context, state) {
-            if (state is RelatedCategoryLoadedState) {
-              List<RelatedCategoryModel> dataList = state.users;
-              if (dataList.isNotEmpty) {
-                for (int i = 0; i < dataList.length; i++) {
-                  check.add(false);
-                }
-                return Column(
-                  children: [
-                    Flexible(
-                        child: ListView.builder(
-                            itemCount: dataList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, index) {
-                              return CheckboxListTile(
-                                title: Text(
-                                  "${dataList[index].groupHead}",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
-                                ),
-                                value: check[index],
-                                onChanged: (value) {
-                                  setState(() {
-                                    check[index] = value!;
-                                    if (value == true) {
-                                      _list.add(dataList[index].ghCode);
-                                    } else {
-                                      _list.remove(dataList[index].ghCode);
-                                      print(_list);
-                                    }
-                                  });
-                                },
-                                controlAffinity: ListTileControlAffinity
-                                    .leading, //  <-- leading Checkbox
-                              );
-                            })),
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
+    List data = widget.ghCode;
+    if (data.isNotEmpty) {
+      for (int i = 0; i < data.length; i++) {
+        check.add(false);
+      }
+    }
+    return Scaffold(
+      appBar: header(context, titleText: ""),
+      body: Column(
+        children: [
+          Flexible(
+              child: ListView.builder(
+                  itemCount: data.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, index) {
+                    return CheckboxListTile(
+                      title: Text(
+                        "${data[index].groupHead}",
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          if (_list.isNotEmpty) {
+                      value: check[index],
+                      onChanged: (value) {
+                        setState(() {
+                          check[index] = value!;
+                          if (value == true) {
+                            _list.add(data[index].ghCode);
+                          } else {
+                            _list.remove(data[index].ghCode);
                             print(_list);
-                            int score = await Future.delayed(
-                                const Duration(milliseconds: 200), () => 42);
-
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => CategoryOption(
-                            //           _list.toString(),
-                            //           widget._namer.toString(),
-                            //           widget._degicnation.toString(),
-                            //           widget._organization.toString(),
-                            //           widget._phoneNum.toString(),
-                            //           widget._emailFirst.toString(),
-                            //           widget._password.toString(),
-                            //           widget.group.toString(),
-                            //         )));
-
                           }
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.pink,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'NEXT',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                  ],
-                );
-              }
-            }
-            if (state is RelatedCategoryLoadingState) {
-              return Center(
-                child: Text(
-                  "Loading...",
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity
+                          .leading, //  <-- leading Checkbox
+                    );
+                  })),
+          Container(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: GestureDetector(
+              onTap: () async {
+                if (_list.isNotEmpty) {
+                  print(_list);
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => CategoryOption(
+                  //           _list.toString(),
+                  //           widget._namer.toString(),
+                  //           widget._degicnation.toString(),
+                  //           widget._organization.toString(),
+                  //           widget._phoneNum.toString(),
+                  //           widget._emailFirst.toString(),
+                  //           widget._password.toString(),
+                  //           widget.group.toString(),
+                  //         )));
+
+                }
+              },
+              child: Container(
+                height: 40,
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.pink,
                 ),
-              );
-            }
-            if (state is RelatedCategoryErrorState) {
-              return Center(child: Text("Error"));
-            }
-            if (state is RelatedCategoryNotSearchState) {
-              return Center(
-                child: ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<RelatedCategoryBloc>(context).add(
-                        RelatedCategorySubmittedEvent(ghCode: "1"),
-                      );
-                    },
-                    child: Text(
-                      "Click",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.black,
-                      ),
-                    )),
-              );
-            }
-            return Container();
-          },
-        ),
+                child: Center(
+                  child: Text(
+                    'NEXT',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }
