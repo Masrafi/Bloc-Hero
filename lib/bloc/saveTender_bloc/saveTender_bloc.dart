@@ -1,23 +1,17 @@
-import 'dart:convert';
-
-import 'package:email_validator/email_validator.dart';
+import 'package:bdtender_bloc/repository/saveTender_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-import '../../utils/config.dart';
 import 'saveTender_event.dart';
 import 'saveTender_state.dart';
 
 class SaveTenderBloc extends Bloc<SaveTenderEvent, SaveTenderState> {
-  SaveTenderBloc() : super(SaveTenderInitialState()) {
+  SafeTenderRepo safeTenderRepo;
+  SaveTenderBloc(this.safeTenderRepo) : super(SaveTenderInitialState()) {
     on<SaveTenderSubmittedEvent>(
       (event, emit) async {
         emit(SaveTenderLoadingState());
-        var endPoint = Config.SAVE_TENDER;
-        Response response = await post(Uri.parse(endPoint), body: {
-          "Email": event.email,
-          "tendercode": event.tenderCode,
-        });
-        if (jsonDecode(response.body) == "Success") {
+        final message =
+            await safeTenderRepo.safeTender(event.email, event.tenderCode);
+        if (message == "Success") {
           emit(SaveTenderSuccessState());
         } else {
           emit(SaveTenderFailState());

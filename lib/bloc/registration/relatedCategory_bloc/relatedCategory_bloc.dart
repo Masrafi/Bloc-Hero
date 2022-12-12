@@ -13,7 +13,6 @@ class RelatedCategoryBloc
       (event, emit) async {
         if (event is RelatedCategorySubmittedEvent) {
           emit(RelatedCategoryLoadingState());
-          print("........................................................");
           try {
             print("This is try");
             final user = await _repository.getRelatedCategoryData(event.ghCode);

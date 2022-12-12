@@ -8,6 +8,7 @@ import '../../bloc/saveTender_bloc/saveTender_bloc.dart';
 import '../../bloc/saveTender_bloc/saveTender_event.dart';
 import '../../bloc/saveTender_bloc/saveTender_state.dart';
 import '../../model/details_model/todayTenderDetails.dart';
+import '../../repository/saveTender_repo.dart';
 import '../../utils/heder.dart';
 
 class TodayTenderDetailsScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class TodayTenderDetailsScreen extends StatelessWidget {
           )..add(TodayTenderDetailsLoadEvent()),
         ),
         BlocProvider(
-          create: (context) => SaveTenderBloc(),
+          create: (context) => SaveTenderBloc(SafeTenderRepo()),
         ),
       ],
       child: Scaffold(

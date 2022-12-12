@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
+import '../../repository/login_repo.dart';
 import '../../utils/config.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
-  LogInBloc() : super(LogInInitialState()) {
+  LoginRepo loginRepo;
+  LogInBloc(this.loginRepo) : super(LogInInitialState()) {
     on<LogInTextChangeEvent>(
       (event, emit) {
         if (EmailValidator.validate(event.emailValue) == false) {
@@ -23,13 +25,9 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
     on<LogInSubmittedEvent>(
       (event, emit) async {
         emit(LogInLoadingState());
-        var endPoint = Config.LOGIN;
-        Response response = await post(Uri.parse(endPoint), body: {
-          "txtemail": event.email,
-          "Password": event.password,
-        });
-        print(response.body);
-        if (jsonDecode(response.body) == "Success") {
+        final message = await loginRepo.login(event.email, event.password);
+
+        if (message == "Success") {
           emit(LogInSuccessState());
         } else {
           emit(LogInFailState());

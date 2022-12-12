@@ -1,3 +1,4 @@
+import 'package:bdtender_bloc/repository/saveTender_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/details_bloc/corrigen_details/corrigenTenderDetails_bloc.dart';
@@ -25,7 +26,7 @@ class CorrigenTenderDetailsScreen extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (context) => SaveTenderBloc(),
+          create: (context) => SaveTenderBloc(SafeTenderRepo()),
         ),
       ],
       child: Scaffold(

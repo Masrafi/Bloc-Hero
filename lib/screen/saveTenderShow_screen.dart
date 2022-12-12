@@ -13,6 +13,7 @@ import '../bloc/saveTenderDelete_bloc/saveTenderDelete_event.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_bloc.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_event.dart';
 import '../bloc/saveTenderShow_bloc/saveTenderShow_state.dart';
+import '../repository/saveTenderDelete_repo.dart';
 
 class SaveTenderShowScreen extends StatefulWidget {
   const SaveTenderShowScreen({Key? key}) : super(key: key);
@@ -33,7 +34,8 @@ class _SaveTenderShowScreenState extends State<SaveTenderShowScreen> {
               SaveTenderShowLoadEvent(),
             ),
         ),
-        BlocProvider(create: (_) => SaveTenderDeleteBloc()),
+        BlocProvider(
+            create: (_) => SaveTenderDeleteBloc(SafeTenderDeleteRepo())),
       ],
       child: Scaffold(
           appBar: header(context, titleText: "Save Tender Show"),

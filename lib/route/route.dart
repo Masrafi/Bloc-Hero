@@ -2,6 +2,7 @@ import 'package:bdtender_bloc/bloc/login_bloc/login_bloc.dart';
 import 'package:bdtender_bloc/bloc/registration/categoryGroup_bloc/categoryGroup_bloc.dart';
 import 'package:bdtender_bloc/repository/corrigen_repo.dart';
 import 'package:bdtender_bloc/repository/live_repo.dart';
+import 'package:bdtender_bloc/repository/login_repo.dart';
 import 'package:bdtender_bloc/repository/private_repo.dart';
 import 'package:bdtender_bloc/repository/details_repo/todayTenderDetails_repo.dart';
 import 'package:bdtender_bloc/repository/registration_repo/categoryGroup_repo.dart';
@@ -37,7 +38,7 @@ class Routes {
                 create: (context) => InternetCubit(),
               ),
               BlocProvider<LogInBloc>(
-                create: (context) => LogInBloc(),
+                create: (context) => LogInBloc(LoginRepo()),
               )
             ],
             child: LoginScreen(),
