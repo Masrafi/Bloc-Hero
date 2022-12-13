@@ -71,6 +71,7 @@ class _ReletedCategoryState extends State<ReletedCategory> {
                           check[index] = value!;
                           if (value == true) {
                             _list.add(data[index].ghCode);
+                            print(_list);
                           } else {
                             _list.remove(data[index].ghCode);
                             print(_list);
