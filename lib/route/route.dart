@@ -6,6 +6,7 @@ import 'package:bdtender_bloc/repository/login_repo.dart';
 import 'package:bdtender_bloc/repository/private_repo.dart';
 import 'package:bdtender_bloc/repository/details_repo/todayTenderDetails_repo.dart';
 import 'package:bdtender_bloc/repository/registration_repo/categoryGroup_repo.dart';
+import 'package:bdtender_bloc/repository/registration_repo/option_repo.dart';
 import 'package:bdtender_bloc/repository/registration_repo/relatedCategory_repo.dart';
 import 'package:bdtender_bloc/repository/saveTenderShow.dart';
 import 'package:bdtender_bloc/screen/home.dart';
@@ -24,6 +25,7 @@ import '../screen/details_screen/corrigenTenderDetails_screen.dart';
 import '../screen/details_screen/liveTenderDetails_screen.dart';
 import '../screen/details_screen/privateTenderDetails_screen.dart';
 import '../screen/details_screen/todayTenderDetails_screen.dart';
+import '../screen/registration/option_screen.dart';
 import '../screen/registration/registration_screen.dart';
 import '../screen/registration/relatedCategory_screen.dart';
 
@@ -110,8 +112,8 @@ class Routes {
           builder: (context) => RepositoryProvider(
             create: (context) => RepositoryCategoryGroup(),
             child: CategoryGroup(
-              namer: arguments["namer"],
-              degicnation: arguments["degicnation"],
+              name: arguments["namer"],
+              designation: arguments["degicnation"],
               organization: arguments["organization"],
               phoneNum: arguments["phoneNum"],
               emailFirst: arguments["emailFirst"],
@@ -128,8 +130,27 @@ class Routes {
             create: (context) => RepositoryRelatedCategory(),
             child: ReletedCategory(
               tGHCode: arguments["tGHCode"],
-              namer: arguments["namer"],
-              degicnation: arguments["degicnation"],
+              name: arguments["namer"],
+              designation: arguments["degicnation"],
+              organization: arguments["organization"],
+              phoneNum: arguments["phoneNum"],
+              emailFirst: arguments["emailFirst"],
+              password: arguments["password"],
+              group: arguments["group"],
+            ),
+          ),
+        );
+
+      case "/option":
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (context) => RepositoryProvider(
+            create: (context) => RepositoryOption(),
+            child: Option(
+              tGHCode: arguments["tGHCode"],
+              name: arguments["namer"],
+              designation: arguments["degicnation"],
               organization: arguments["organization"],
               phoneNum: arguments["phoneNum"],
               emailFirst: arguments["emailFirst"],

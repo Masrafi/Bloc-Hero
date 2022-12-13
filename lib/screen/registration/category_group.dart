@@ -17,8 +17,8 @@ import '../../repository/registration_repo/relatedCategory_repo.dart';
 import '../../utils/heder.dart';
 
 class CategoryGroup extends StatelessWidget {
-  final String namer;
-  final String degicnation;
+  final String name;
+  final String designation;
   final String organization;
   final String phoneNum;
   final String emailFirst;
@@ -26,8 +26,8 @@ class CategoryGroup extends StatelessWidget {
   final String group;
   const CategoryGroup({
     Key? key,
-    required this.namer,
-    required this.degicnation,
+    required this.name,
+    required this.designation,
     required this.organization,
     //this._address,
     required this.phoneNum,
@@ -59,8 +59,8 @@ class CategoryGroup extends StatelessWidget {
                   '/relatedgroup',
                   arguments: {
                     "tGHCode": dataList,
-                    "namer": namer,
-                    "degicnation": degicnation,
+                    "namer": name,
+                    "degicnation": designation,
                     "organization": organization,
                     "phoneNum": phoneNum,
                     "emailFirst": emailFirst,
