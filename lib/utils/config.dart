@@ -1,5 +1,5 @@
 class Config {
-  static const Base_URL = "https://bdtender.com/api/";
+  static const Base_URL = "";
 
   //static const Base_URL = "https://3.109.36.149/";
   static const CORRIGEN_REPO = Base_URL + "count-corrigendum-tender";
