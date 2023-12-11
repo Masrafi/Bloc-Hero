@@ -149,3 +149,9 @@ class TodayTenderDetailsModel {
         "sectorname": sectorname,
       };
 }
+
+extension HistoryBookingExtension on TodayTenderDetailsModel {
+  String get chenage  {
+    return "${visitors} masrafi";
+  }
+  }

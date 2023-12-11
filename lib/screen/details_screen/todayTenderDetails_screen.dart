@@ -453,7 +453,7 @@ class TodayTenderDetailsScreen extends StatelessWidget {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        dataList[index].visitors ??
+                                        dataList[index].chenage ??
                                             "View Image",
                                         style: TextStyle(
                                           color: Colors.black,
