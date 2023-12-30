@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'BaseApiService.dart';
 
-class NetworkApiService implements BaseApiService {
+class NetworkApiService extends BaseService implements BaseApiService {
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
